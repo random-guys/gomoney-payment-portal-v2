@@ -1,10 +1,26 @@
 <template>
-  <div>
-    <Nuxt />
-  </div>
+  <main class="main">
+    <section class="main__bg__section">
+      <app-main-bg />
+    </section>
+    <section class="main__page__section">
+      <Nuxt />
+    </section>
+  </main>
 </template>
 
-<style>
+<script>
+import MainBg from '@/components/layout/main-bg.vue'
+export default {
+  components: {
+    'app-main-bg': MainBg,
+  },
+}
+</script>
+
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -23,33 +39,37 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
+.main {
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+  &__bg__section {
+    height: 100vh;
+    flex: 0 0 50%;
+  }
+
+  &__page__section {
+    background-color: #ffffff;
+    flex: 0 0 50%;
+  }
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
+@media only screen and (max-width: 768px) {
+  .main {
+    background-color: lightblue;
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
+    &__bg__section {
+      display: none;
+    }
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+    &__page__section {
+      background-color: #ffffff;
+      flex: 0 0 100%;
+    }
+  }
 }
 </style>
