@@ -1,0 +1,23 @@
+.text {
+  line-height: 2;
+
+  &--semibold {
+    font-size: 20px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #171717;
+  }
+
+  &--light {
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.16px;
+    color: #7f7f7f;
+  }
+}
