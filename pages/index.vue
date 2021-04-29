@@ -1,15 +1,11 @@
 <template>
-  <div class="container">
-    <app-floating-input></app-floating-input>
-  </div>
+  <div class="container"></div>
 </template>
 
 <script>
-import FloatingInput from '../components/elements/floating-input.vue'
-
 export default {
-  components: {
-    'app-floating-input': FloatingInput,
+  mounted() {
+    this.$router.push('/redeem-payment')
   },
 }
 </script>

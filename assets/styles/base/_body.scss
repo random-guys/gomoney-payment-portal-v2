@@ -1,0 +1,32 @@
+body {
+  font-family: 'Roboto', sans-serif;
+
+  .container {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  a {
+    color: #376bf2;
+    text-decoration: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body {
+    .container {
+      width: 70%;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  body {
+    .container {
+      width: 50%;
+      margin: 0 auto;
+    }
+  }
+}

@@ -68,6 +68,9 @@
 
 .group {
   margin-bottom: 0.688rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &__img:not(:first-of-type) {
     margin-left: 0.75rem;
