@@ -1,18 +1,21 @@
 <template>
-  <article class="passcode">
+  <article class="account">
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
-      <small class="text--light">Sent you </small>
-      <p class="text--semibold">N 5000,000.00</p>
+      <p class="text--light">Sent you</p>
+      <p class="text--semibold">N 500,000.00</p>
+      <p class="text--light">For: Chop Life Small</p>
     </div>
 
-    <form class="form" @submit.prevent="handlePasscode">
+    <form class="form" @submit.prevent="$emit('pay')">
       <label for="">Enter the passcode shared with the link</label>
 
       <div id="floatContainer" class="float__container form__field">
-        <label for="passcode" class="float__label text-light">Passcode</label>
+        <label for="passcode" class="float__label text-light"
+          >Account no / phone number</label
+        >
         <input
-          id="passcode"
+          id="account-number"
           v-model.number="passcode"
           class="float__input"
           type="number"
@@ -23,10 +26,8 @@
       </div>
 
       <div class="form__field">
-        <button type="submit" class="btn" :disabled="!passcode">Proceed</button>
+        <button type="submit" class="btn">Pay Raymond Tukpe</button>
       </div>
-
-      <p class="text--light">This code can only be used once</p>
     </form>
   </article>
 </template>
@@ -50,20 +51,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/pages/redeem-payment';
 @import '@/assets/styles/components/floating-input.scss';
 @import '@/assets/styles/components/buttons.scss';
 @import '@/assets/styles/components/form.scss';
 
-.passcode {
+.account {
+  padding-top: 4.125rem;
   width: 100%;
 }
 
-.form {
-  width: 100%;
+.text--light {
+  line-height: 2;
+}
 
-  &__field {
-    margin-top: 12px;
-    margin-bottom: 12px;
-  }
+.form {
+  margin-top: 25px;
+}
+
+.article {
+  margin-top: 21.5px;
+  line-height: 1.8;
+  text-align: left;
+  font-size: 15px;
+}
+
+.article__heading {
+  margin: 21.5px 0px 12px 0px;
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.19px;
+  color: #7f7f7f;
 }
 </style>

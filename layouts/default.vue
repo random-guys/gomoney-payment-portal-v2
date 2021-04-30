@@ -34,6 +34,7 @@ export default {
   }
 
   &__page__section {
+    height: 100vh;
     background-color: #ffffff;
     flex: 0 0 50%;
   }
