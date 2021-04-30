@@ -11,6 +11,5 @@
   justify-content: center;
   width: 100%;
   text-align: center;
-  margin-bottom: 9rem;
 }
 </style>
