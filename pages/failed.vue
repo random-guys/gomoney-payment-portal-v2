@@ -1,11 +1,15 @@
 <template>
-  <section class="success container">
-    <div class="success__img"></div>
+  <section class="container failed">
+    <div class="failed__img"></div>
 
     <article>
-      <h2 class="success__title">{{ title }}</h2>
-      <p class="success__subtitle">{{ subtitle }}</p>
+      <h2 class="failed__title">{{ title }}</h2>
+      <p class="failed__subtitle">{{ subtitle }}</p>
     </article>
+
+    <div class="pill">
+      <p>{{ trxRef }}</p>
+    </div>
   </section>
 </template>
 
@@ -14,11 +18,16 @@ export default {
   props: {
     title: {
       type: String,
-      default: () => 'Successful!',
+      default: () => 'Payment Failed!!',
     },
     subtitle: {
       type: String,
-      default: () => 'Your money has been sent to your account',
+      default: () =>
+        'The amount recieved does not match the expected amount. You will recieve a full refund immediately.',
+    },
+    trxRef: {
+      type: String,
+      default: 'trxRef',
     },
   },
 }
@@ -27,7 +36,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/pages/redeem-payment';
 
-.success {
+.failed {
   align-items: flex-start;
   text-align: center;
   padding-top: 7.438rem;
@@ -69,5 +78,13 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+
+.pill {
+  background: #dbecff;
+  padding: 10px 50px;
+  width: 200px;
+  margin: 15px auto;
+  border-radius: 10px;
 }
 </style>
