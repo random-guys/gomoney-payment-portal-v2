@@ -43,11 +43,11 @@ export default {
   },
   data() {
     return {
-      showMerchantInfo: false,
+      showMerchantInfo: true,
       showMerchantBankOption: false,
       showGomoneyPayInfo: false,
       showOtherBankPayInfo: false,
-      showPaymentProcessing: true,
+      showPaymentProcessing: false,
     }
   },
   methods: {
