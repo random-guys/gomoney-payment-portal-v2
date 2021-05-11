@@ -1,6 +1,6 @@
 <template>
   <article class="logo">
-    <img src="@/assets/img/gomoney-logo.png" alt="logo for gomoney" />
+    <img src="@/assets/icons/horizontal-logo.svg" alt="gomoney logo" />
   </article>
 </template>
 
