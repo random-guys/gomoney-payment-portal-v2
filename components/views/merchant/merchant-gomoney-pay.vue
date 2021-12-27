@@ -19,7 +19,7 @@
         <label for="name" class="float__label text-light">Your name</label>
         <input
           id="name"
-          v-model.number="name"
+          v-model="name"
           class="float__input"
           type="text"
           data-placeholder=""
@@ -33,7 +33,7 @@
         <label for="email" class="float__label text-light">Email address</label>
         <input
           id="email"
-          v-model.number="email"
+          v-model="email"
           class="float__input"
           type="email"
           data-placeholder=""
@@ -49,7 +49,7 @@
           id="phone"
           v-model.number="phone"
           class="float__input"
-          type="telephone"
+          type="tel"
           data-placeholder=""
           required
           @focus="handleFocus($event)"
@@ -71,6 +71,13 @@ import handleInput from '@/mixins/handleInput.js'
 
 export default {
   mixins: [handleInput],
+  data() {
+    return {
+      name: '',
+      email: '',
+      phone: '',
+    }
+  },
   methods: {
     handlePasscode() {
       this.$emit('passcode', this.passcode)

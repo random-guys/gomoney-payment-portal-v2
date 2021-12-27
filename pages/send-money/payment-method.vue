@@ -1,24 +1,21 @@
 <template>
   <div class="container">
     <GomoneyLogo />
-    <SendAccountNumber />
+    <merchant-bank-option />
   </div>
 </template>
 
 <script>
 export default {
   components: {
-    SendAccountNumber: () =>
-      import('@/components/views/send/send-account-number.vue'),
     GomoneyLogo: () => import('@/components/layout/gomoney-logo.vue'),
+    MerchantBankOption: () =>
+      import('~/components/views/merchant/merchant-bank-option.vue'),
   },
-  // mounted() {
-  //   this.$router.push('/redeem-payment')
-  // },
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;

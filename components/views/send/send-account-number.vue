@@ -11,15 +11,24 @@
     <form class="form" @submit.prevent="$emit('pay')">
       <label for="">Enter the phone number you want to pay</label>
 
-      <div id="floatContainer" class="float__container form__field">
-        <label for="passcode" class="float__label text-light"
+      <div
+        id="floatContainer"
+        :class="!!phone ? 'active' : ''"
+        class="float__container form__field"
+      >
+        <label
+          for="phone-number"
+          class="float__label text-light"
+          @click="focusInputField"
           >Account no / Phone number</label
         >
         <input
           id="phone-number"
-          v-model.number="phone"
+          ref="numberInput"
+          v-model="phone"
           class="float__input"
-          type="tel"
+          type="text"
+          pattern="[0-9]*"
           data-placeholder=""
           @focus="handleFocus($event)"
           @blur="handleBlur($event)"
@@ -27,9 +36,12 @@
       </div>
 
       <div class="form__field">
-        <button type="submit" class="btn">Pay</button>
+        <button type="submit" :disabled="!phone" class="btn">Pay</button>
       </div>
-      <p class="text__secure">Secure and encrypted</p>
+      <p class="text__secure">
+        <img src="@/assets/icons/lock.svg" alt="lock icon" /> Secure and
+        encrypted
+      </p>
     </form>
     <article class="article article2">
       <p>Powered by <a href="https://gomoney.global/app">gomoney</a></p>
@@ -49,8 +61,13 @@ export default {
   mixins: [handleInput],
   data() {
     return {
-      amount: '',
+      phone: '',
     }
+  },
+  methods: {
+    focusInputField() {
+      this.$refs.numberInput.focus = true
+    },
   },
 }
 </script>
@@ -64,6 +81,13 @@ export default {
 
   .form {
     margin-top: 40px;
+
+    .text__secure {
+      img {
+        display: inline;
+        margin-right: 5px;
+      }
+    }
   }
 
   .article2 {
