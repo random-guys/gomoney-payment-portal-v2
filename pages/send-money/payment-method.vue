@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <GomoneyLogo />
-    <merchant-bank-option />
+    <merchant-bank-option
+      @payWithGomoney="payWithGomoney"
+      @payWithOtherBanks="payWithOtherBanks"
+    />
   </div>
 </template>
 
@@ -11,6 +14,15 @@ export default {
     GomoneyLogo: () => import('@/components/layout/gomoney-logo.vue'),
     MerchantBankOption: () =>
       import('~/components/views/merchant/merchant-bank-option.vue'),
+  },
+
+  methods: {
+    payWithGomoney() {
+      this.$router.push('/send-money/billing-info')
+    },
+    payWithOtherBanks() {
+      this.$router.push('/send-money/billing-info')
+    },
   },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <GomoneyLogo />
-    <SendAccountNumber />
+    <SendAccountNumber @pay="pay" />
   </div>
 </template>
 
@@ -11,6 +11,12 @@ export default {
     SendAccountNumber: () =>
       import('@/components/views/send/send-account-number.vue'),
     GomoneyLogo: () => import('@/components/layout/gomoney-logo.vue'),
+  },
+
+  methods: {
+    pay() {
+      this.$router.push('/send-money')
+    },
   },
   // mounted() {
   //   this.$router.push('/redeem-payment')

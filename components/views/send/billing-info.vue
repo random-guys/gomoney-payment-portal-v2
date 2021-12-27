@@ -53,7 +53,7 @@
       </div>
 
       <div class="form__field">
-        <button type="submit" class="btn">Send N500,000 to Foodish</button>
+        <button type="submit" class="btn">Pay Raymond Tukpe</button>
       </div>
 
       <p class="text__secure">

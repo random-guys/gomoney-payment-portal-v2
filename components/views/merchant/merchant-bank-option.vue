@@ -5,7 +5,7 @@
     </article>
 
     <article class="article options">
-      <div class="options__item" @click="$emit('gomoney')">
+      <button class="options__item" @click="$emit('payWithGomoney')">
         <img
           class="options__img"
           src="@/assets/img/gomoney-logo.svg"
@@ -34,9 +34,9 @@
             </svg>
           </span>
         </div>
-      </div>
+      </button>
       <hr />
-      <div class="options__item" @click="$emit('others')">
+      <button class="options__item" @click="$emit('payWithOtherBanks')">
         <img
           class="options__img"
           src="@/assets/icons/bank-transfer.svg"
@@ -65,7 +65,7 @@
             </svg>
           </span>
         </div>
-      </div>
+      </button>
     </article>
 
     <article class="article">
@@ -115,7 +115,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    width: 100%;
+    border: none;
+    outline: none;
     cursor: pointer;
+    text-align: left;
     transition: all 0.75s ease-in;
 
     &:not(:first-of-type) {
