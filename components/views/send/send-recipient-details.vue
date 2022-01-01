@@ -47,6 +47,14 @@ import handleInput from '@/mixins/handleInput.js'
 
 export default {
   mixins: [handleInput],
+
+  data() {
+    return {
+      amount: '',
+    }
+  },
+
+  methods: {},
 }
 </script>
 
