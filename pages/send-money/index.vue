@@ -4,7 +4,7 @@
 
     <app-send-account-number v-if="showEnterRecipient" />
 
-    <app-send-recipient-details v-if="showRecipientDetails" />
+    <app-send-recipient-details v-if="showRecipientDetails" @pay="pay" />
   </section>
 </template>
 
@@ -25,7 +25,11 @@ export default {
       showRecipientDetails: true,
     }
   },
-  methods: {},
+  methods: {
+    pay() {
+      this.$router.push('send-money/payment-method')
+    },
+  },
 }
 </script>
 

@@ -1,30 +1,33 @@
 <template>
   <div class="container">
     <GomoneyLogo />
-    <SendAccountNumber @pay="pay" />
+    <merchant-bank-option
+      @payWithGomoney="payWithGomoney"
+      @payWithOtherBanks="payWithOtherBanks"
+    />
   </div>
 </template>
 
 <script>
 export default {
   components: {
-    SendAccountNumber: () =>
-      import('@/components/views/send/send-account-number.vue'),
     GomoneyLogo: () => import('@/components/layout/gomoney-logo.vue'),
+    MerchantBankOption: () =>
+      import('~/components/views/merchant/merchant-bank-option.vue'),
   },
 
   methods: {
-    pay() {
-      this.$router.push('/send-money')
+    payWithGomoney() {
+      this.$router.push('/send-money/billing-info')
+    },
+    payWithOtherBanks() {
+      this.$router.push('/send-money/billing-info')
     },
   },
-  // mounted() {
-  //   this.$router.push('/redeem-payment')
-  // },
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;

@@ -1,6 +1,6 @@
 <template>
   <section class="container redeem">
-    <app-gomoney-logo class="app-logo" v-if="showMerchantInfo" />
+    <app-gomoney-logo v-if="showMerchantInfo" class="app-logo" />
 
     <app-merchant-info v-if="showMerchantInfo" @pay="gotoBankOption" />
 

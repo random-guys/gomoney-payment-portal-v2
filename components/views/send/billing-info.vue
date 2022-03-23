@@ -1,42 +1,61 @@
 <template>
   <article class="info">
     <article class="article">
+      <GomoneyLogo class="app-logo" />
+
       <img class="info__img" src="@/assets/img/person.png" alt="user image " />
       <p class="text--semibold">Pay Raymond Tukpe</p>
     </article>
 
-    <form class="form" @submit.prevent="$emit('pay')">
+    <form class="form" @submit.prevent="handlePasscode">
+      <label for="">Enter your billing information</label>
+
       <div id="floatContainer" class="float__container form__field">
-        <label for="amount" class="float__label text-light"
-          >Amount to pay</label
-        >
+        <label for="name" class="float__label text-light">Your name</label>
         <input
-          id="amount"
-          v-model.number="amount"
+          id="name"
+          v-model="name"
           class="float__input"
-          type="number"
+          type="text"
           data-placeholder=""
+          required
           @focus="handleFocus($event)"
           @blur="handleBlur($event)"
         />
       </div>
 
       <div id="floatContainer" class="float__container form__field">
-        <label for="message" class="float__label text-light">Message</label>
+        <label for="email" class="float__label text-light">Email address</label>
         <input
-          id="message"
-          v-model="message"
+          id="email"
+          v-model="email"
           class="float__input"
-          type="text"
+          type="email"
           data-placeholder=""
+          required
+          @focus="handleFocus($event)"
+          @blur="handleBlur($event)"
+        />
+      </div>
+
+      <div id="floatContainer" class="float__container form__field">
+        <label for="phone" class="float__label text-light">Phone number</label>
+        <input
+          id="phone"
+          v-model.number="phone"
+          class="float__input"
+          type="tel"
+          data-placeholder=""
+          required
           @focus="handleFocus($event)"
           @blur="handleBlur($event)"
         />
       </div>
 
       <div class="form__field">
-        <button type="submit" class="btn">Send N10,000 to Raymond</button>
+        <button type="submit" class="btn">Pay Raymond Tukpe</button>
       </div>
+
       <p class="text__secure">
         <img src="@/assets/icons/lock.svg" alt="lock icon" /> Secure and
         encrypted
@@ -50,11 +69,20 @@ import handleInput from '@/mixins/handleInput.js'
 
 export default {
   mixins: [handleInput],
+  components: {
+    GomoneyLogo: () => import('@/components/layout/gomoney-logo.vue'),
+  },
   data() {
     return {
-      amount: '',
-      message: '',
+      name: '',
+      email: '',
+      phone: '',
     }
+  },
+  methods: {
+    handlePasscode() {
+      this.$emit('passcode', this.passcode)
+    },
   },
 }
 </script>
@@ -82,24 +110,12 @@ export default {
 
 .form {
   margin-top: 25px;
-
-  &__field {
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    input[type='number'] {
-      -moz-appearance: textfield;
-    }
-  }
 }
 
 .text__secure {
   img {
     display: inline;
-    margin-right: 2px;
+    margin-right: 5px;
   }
 }
 </style>
