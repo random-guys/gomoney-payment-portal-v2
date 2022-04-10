@@ -1,0 +1,42 @@
+@import url('~assets/styles/variables.scss');
+
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--primaryFont);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  color: var(--primaryFontColor);
+
+  animation-name: fadeIn;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.5s;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+input,
+select,
+textarea {
+  border: 1px solid #c4c4c6;
+  outline: none;
+  background: transparent;
+}

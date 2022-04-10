@@ -1,0 +1,13 @@
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
+
+[context.branch-deploy]
+  [context.branch-deploy.environment]
+    YARN_VERSION = "1.22.10"
+ 
+
+[context.deploy-preview]
+  [context.deploy-preview.environment]
+  YARN_VERSION = "1.22.10"
