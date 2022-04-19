@@ -10,9 +10,14 @@
         alt="onboarding"
       />
     </div>
-    <div class="tw-w-full tw-flex tw-justify-center tw-items-center tw-mt-14">
-      <Nuxt />
-    </div>
+    <main class="tw-pt-20">
+      <div class="container">
+        <img class="tw-mx-auto" src="@/assets/img/logo.svg" alt="gomoney" />
+        <div class="tw-w-full tw-mt-12">
+          <Nuxt />
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -33,6 +38,10 @@ export default {
 
   .bg-img {
     z-index: -10;
+  }
+  .container {
+    max-width: 400px;
+    margin: auto;
   }
 }
 </style>

@@ -51,7 +51,7 @@ export default {
         //   break
 
         default:
-          break
+          this.currentComponent = 'passcode'
       }
     },
   },

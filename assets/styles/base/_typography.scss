@@ -1,0 +1,67 @@
+$light-blue: #e1eeff;
+$pry-color: #376bf2;
+
+.text {
+  line-height: 2;
+}
+
+.text--semibold {
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 1px;
+  color: #171717;
+}
+
+.text__bold--blue {
+  font-size: 22px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 28px;
+  letter-spacing: 2px;
+  color: #376bf2;
+}
+
+.text--light {
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.16px;
+  color: #7f7f7f;
+}
+
+.text--bold {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.27;
+  letter-spacing: 0.35px;
+  text-align: center;
+  color: #000000;
+}
+
+.text--currency {
+  font-size: 22px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.27;
+  letter-spacing: 0.35px;
+  text-align: center;
+  color: #000000;
+}
+
+.article {
+  margin-top: 20px;
+  line-height: 2;
+  text-align: center;
+  font-size: 15px;
+
+  p {
+    line-height: 1.5;
+  }
+}
