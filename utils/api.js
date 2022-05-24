@@ -1,14 +1,6 @@
 import axios from 'axios'
-// import { getItem } from '@/utils/storage.js'
 
-const baseUrl = `${process.env.VUE_APP_BASE_URL}`
-export default {
-  //   getHeader: () => ({
-  //     Authorization: 'Bearer ' + getItem('org_token'),
-  //   }),
-  // return headers
+const baseUrl = process.env.VUE_APP_BASE_URL
 
-  verifyLink(id) {
-    return axios.get(`${baseUrl}/payment-request-links/${id}`)
-  },
-}
+export const getBankList = () =>
+  axios.get('https://api.staging.gomoney.global' + '/nip/outbound/banks')

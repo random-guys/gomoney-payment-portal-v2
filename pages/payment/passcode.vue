@@ -20,9 +20,10 @@
     <article class="article">
       <p class="article__heading">Claiming your money</p>
       <p class="text--light">
-        <a href="">open a gomoney account</a> and have your money sent there
-        free of charge, or transfer to any existing Nigerian bank account.
-        Either way, you'll get your money instantly!
+        <nuxt-link to="/payment/open-account">open a gomoney account</nuxt-link>
+        and have your money sent there free of charge, or transfer to any
+        existing Nigerian bank account. Either way, you'll get your money
+        instantly!
       </p>
 
       <p class="text--light article__info">
@@ -42,7 +43,11 @@ export default {
       passcode: 'ldsjjfklajkdf',
     }
   },
-  methods: {},
+  methods: {
+    handlePasscode() {
+      this.$router.push('/payment/method')
+    },
+  },
 }
 </script>
 

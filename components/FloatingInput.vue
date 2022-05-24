@@ -1,9 +1,11 @@
 <template>
-  <div id="floatContainer" class="float__container tw-min-w-full">
-    <label for="floatField" class="float__label">{{ placeholder }}</label>
+  <div class="float__container tw-min-w-full">
+    <label @click="focusInput" for="floatField" class="float__label">{{
+      placeholder
+    }}</label>
     <input
+      v-if="!select"
       ref="input"
-      id="floatField"
       class="float__input"
       :type="type"
       :pattern="checkIfPhoneOrAccount && '[0-9]+'"
@@ -13,11 +15,28 @@
       v-model="inputValue"
       @keydown="checkIfPhoneOrAccount ? handleInputValue($event) : undefined"
     />
+
+    <select
+      v-if="select"
+      ref="input"
+      class="float__input"
+      :type="type"
+      :pattern="checkIfPhoneOrAccount && '[0-9]+'"
+      data-placeholder=""
+      @focus="handleFocus($event)"
+      @blur="handleBlur($event)"
+      v-model="inputValue"
+    >
+      <option v-for="{ Bankname, i } in bank" :key="i" :value="Bankname">
+        {{ Bankname }}
+      </option>
+    </select>
   </div>
 </template>
 
 <script>
 import { isNumber } from '../utils/helpers'
+import { getBankList } from '../utils/api'
 export default {
   props: {
     type: {
@@ -30,6 +49,9 @@ export default {
       default: 'input field',
       required: true,
     },
+    select: {
+      type: Boolean,
+    },
     value: {
       type: String,
       required: true,
@@ -39,21 +61,27 @@ export default {
   data() {
     return {
       inputValue: '',
+      bank: [],
     }
   },
   computed: {
     checkIfPhoneOrAccount() {
       return (
-        this.$props.placeholder.includes('Account') ||
-        this.$props.placeholder.includes('Phone') ||
-        this.$props.placeholder.includes('Amount') ||
-        this.$props.placeholder.includes('passcode')
+        !!this.placeholder.match(/Account/i) ||
+        !!this.placeholder.match(/Phone/i) ||
+        !!this.placeholder.match(/Amount/i) ||
+        !!this.placeholder.match(/passcode/i)
       )
     },
   },
 
-  created() {
+  async created() {
     this.inputValue = this.value
+    if (!this.select) return
+    const {
+      data: { data },
+    } = await getBankList()
+    this.bank = data
   },
 
   mounted() {
@@ -89,6 +117,10 @@ export default {
         e.preventDefault()
       }
     },
+    focusInput() {
+      this.handleFocus()
+      this.$refs.input.focus()
+    },
   },
 }
 </script>
@@ -115,6 +147,10 @@ export default {
   background: none;
 }
 
+select:not(disabled) {
+  cursor: pointer;
+}
+
 .float__label {
   font-size: 16px;
   color: $pryLabelCol;
@@ -122,12 +158,14 @@ export default {
   transform-origin: top left;
   transform: translate(0, 14px) scale(1);
   transition: all 0.1s ease-in-out;
+  cursor: text;
 }
 
 .active {
   .float__label {
     transform: translate(0, 0px) scale(0.8);
     color: $activeLabelCol;
+    cursor: initial;
   }
 }
 
