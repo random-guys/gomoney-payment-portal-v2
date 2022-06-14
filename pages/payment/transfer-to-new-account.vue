@@ -32,22 +32,23 @@
           </div>
         </div>
       </div>
-      <FormBtn :title="`Claim N${amountToPay} to your Account`" />
-      <div class="tw-mt-48"></div>
+      <FormBtn>
+        Claim &#8358;{{ amountToPay.toLocaleString() }} to your Account
+      </FormBtn>
     </form>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import FormBtn from '~/components/FormBtn.vue'
 
 export default {
   name: 'transferToNewAccount ',
   data() {
     return {
       copyText: 'Click To Copy',
-      amountToPay: 100,
-      image: 'working',
+      amountToPay: 10000,
     }
   },
   computed: {
@@ -61,6 +62,7 @@ export default {
       this.copyText = 'Copied!'
     },
   },
+  components: { FormBtn },
 }
 </script>
 

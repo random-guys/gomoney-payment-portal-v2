@@ -37,13 +37,14 @@
       />
       <div class="form__submit tw-relative">
         <div
-          class="tw-absolute tw-top-0 tw-text-center tw-w-full tw-text-red-400"
+          class="tw-absolute tw--top-2 tw-text-center tw-w-full tw-text-red-400"
         >
           {{ error }}
         </div>
-        <button type="submit" class="btn" :disabled="!formFilled">
-          Sign Up
-        </button>
+        <FormBtn :disabled="!formFilled">
+          <Spinner v-if="loading" height="15px" />
+          <template v-else> Sign Up </template>
+        </FormBtn>
       </div>
     </form>
   </main>
@@ -51,8 +52,10 @@
 
 <script>
 import axios from 'axios'
+import FormBtn from '~/components/FormBtn.vue'
 
 export default {
+  components: { FormBtn },
   data() {
     return {
       firstName: '',
@@ -61,9 +64,9 @@ export default {
       passcode: '',
       passcodeCheck: '',
       error: '',
+      loading: false,
     }
   },
-
   computed: {
     formFilled() {
       return (
@@ -89,6 +92,7 @@ export default {
         setTimeout(() => (this.error = ''), 3000)
         return
       }
+      this.loading = true
       let userExist = axios.get(
         process.env.baseUrl + '/utils/profile/' + this.phoneNumber
       )
@@ -98,24 +102,24 @@ export default {
         last_name: this.lastName,
         password: this.passcode,
       })
-
       Promise.all([userExist, createAccount])
       userExist
         .then(() => {
-          console.log('see me in 104')
+          this.loading = false
           this.error = 'User Already Exist'
           setTimeout(() => (this.error = ''), 3000)
         })
         .catch((err) => console.log(err))
-
       createAccount
         .then(({ data: { data } }) => {
+          this.loading = false
           this.$store.commit('SET_USER_DATA', { ...data.user })
           this.$router.push('/payment/transfer-to-new-account')
         })
         .catch((err) => {
           if (this.error) return
           this.error = 'Name Not Supported'
+          this.loading = false
         })
       setTimeout(() => (this.error = ''), 3000)
     },

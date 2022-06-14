@@ -17,7 +17,7 @@
       />
       <div class="form__field">
         <button type="submit" class="btn" :disabled="!number">
-          Pay Temi Kara
+          Redeem to {{ name }}
         </button>
       </div>
 
@@ -31,7 +31,12 @@ export default {
   data() {
     return {
       number: 73292903,
+      name: 'Temi Kara',
     }
+  },
+
+  computed: {
+    // ...mapGetters([]),
   },
 }
 </script>
