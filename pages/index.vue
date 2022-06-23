@@ -1,61 +1,37 @@
 <template>
   <div id="index-page">
-    <component :is="currentComponent" :key="currentComponent" />
+    <!-- <component :is="currentComponent" :key="currentComponent" /> -->
   </div>
 </template>
 
 <script>
-import passcode from '~/pages/payment/passcode.vue'
-// import billinginfo from '~/pages/payment/billinginfo.vue'
-// import paymentmethod from '~/pages/payment/paymentmethod.vue'
-// import disposableaccount from '~/pages/payment/disposableaccount.vue'
-// import confirmation from '~/pages/payment/confirmation.vue'
+import axios from 'axios'
 
 export default {
   name: 'IndexPage',
 
-  components: {
-    passcode,
-    // billinginfo,
-    // paymentmethod,
-    // disposableaccount,
-    // confirmation,
-  },
-
   data() {
-    return {
-      currentComponent: 'passcode',
+    return {}
+  },
+
+  beforeMount() {
+    if (this.$route.hash.length > 10) {
+      this.$store.commit('SET_LINK', this.$route.hash.slice(1))
+      this.$router.push('/payment/passcode')
+    } else {
+      window.open('https://gomoney.global', '_self')
     }
-  },
-
-  created() {
-    this.setComponent(this.$route.name)
-  },
-  methods: {
-    setComponent(route) {
-      switch (route) {
-        case 'payment-passcode':
-          this.currentComponent = 'passcode'
-          break
-        // case 'payment-billinginfo':
-        //   this.currentComponent = 'billinginfo'
-        //   break
-        // case 'payment-paymentmethod':
-        //   this.currentComponent = 'paymentmethod'
-        //   break
-        // case 'payment-disposableaccount':
-        //   this.currentComponent = 'disposableaccount'
-        //   break
-        // case 'payment-confirmation':
-        //   this.currentComponent = 'confirmation'
-        //   break
-
-        default:
-          this.currentComponent = 'passcode'
-      }
-    },
+    // axios
+    //   .get(process.env.baseUrl + '/link/' + this.$route.hash)
+    //   .then((res) => console.log(res, 'lol'))
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#index-page {
+  min-width: 100vw;
+  min-height: 100vh;
+  background: #fff;
+}
+</style>

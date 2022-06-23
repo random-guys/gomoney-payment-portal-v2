@@ -1,5 +1,5 @@
 <template>
-  <main class="method">
+  <main class="method page-animate">
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
@@ -38,7 +38,7 @@
       </button>
     </div>
     <aside>
-      <button>
+      <button @click="$router.push('/payment/open-account')">
         <span class="text__bold--blue">Open a gomoney account for free</span>
         <img class="icon" src="@/assets/img/Mask.svg" alt="gomoney" />
       </button>

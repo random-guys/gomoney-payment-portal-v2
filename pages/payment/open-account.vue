@@ -1,5 +1,5 @@
 <template>
-  <main class="passcode">
+  <main class="open-account page-animate">
     <div class="text">
       <p class="text--semibold">Open A Gomoney Account</p>
     </div>
@@ -43,7 +43,7 @@
         </div>
         <FormBtn :disabled="!formFilled">
           <Spinner v-if="loading" height="15px" />
-          <template v-else> Sign Up </template>
+          <template v-else> Sign Up</template>
         </FormBtn>
       </div>
     </form>
@@ -51,8 +51,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapState } from 'vuex'
 import FormBtn from '~/components/FormBtn.vue'
+import { createUser, userProfile } from '~/utils/api'
 
 export default {
   components: { FormBtn },
@@ -65,9 +66,11 @@ export default {
       passcodeCheck: '',
       error: '',
       loading: false,
+      amount: 500,
     }
   },
   computed: {
+    ...mapState(['link', 'transactionDetails']),
     formFilled() {
       return (
         this.firstName &&
@@ -80,48 +83,72 @@ export default {
     },
   },
   methods: {
-    signUp() {
+    async signUp() {
       if (!this.formFilled) return
-      if (this.passcode.length > 4 || this.passcode.length < 4) {
-        this.error = 'Passcode Should Be Four Digits'
-        setTimeout(() => (this.error = ''), 3000)
-        return
-      }
-      if (this.passcode !== this.passcodeCheck) {
-        this.error = 'Passcode Do Not Match'
-        setTimeout(() => (this.error = ''), 3000)
-        return
-      }
+
+      const isFirstNameLetters = this.firstName.match(/^[A-Za-z]+$/)
+      const isLastNameLetters = this.lastName.match(/^[A-Za-z]+$/)
+
       this.loading = true
-      let userExist = axios.get(
-        process.env.baseUrl + '/utils/profile/' + this.phoneNumber
-      )
-      let createAccount = axios.post(process.env.baseUrl + '/user', {
-        phone_number: this.phoneNumber,
-        first_name: this.firstName,
-        last_name: this.lastName,
-        password: this.passcode,
-      })
-      Promise.all([userExist, createAccount])
-      userExist
-        .then(() => {
-          this.loading = false
-          this.error = 'User Already Exist'
-          setTimeout(() => (this.error = ''), 3000)
+
+      try {
+        if (!isFirstNameLetters || !isLastNameLetters) {
+          throw new Error('Name Should Contain only Letters')
+        }
+
+        if (this.passcode.length > 4 || this.passcode.length < 4) {
+          throw new Error('Passcode Should Be Four Digits')
+        }
+
+        if (this.passcode !== this.passcodeCheck) {
+          throw new Error('Passcode Do Not Match')
+        }
+
+        const userDetails = {
+          link: this.link,
+          referrer: '2348067153177',
+          amount: 2500,
+          from_website: true,
+          phone_number: this.phoneNumber,
+          first_name: this.firstName,
+          last_name: this.lastName,
+          password: this.passcode,
+        }
+
+        const req = await Promise.allSettled([
+          userProfile(this.phoneNumber),
+          createUser(userDetails),
+        ])
+        this.loading = false
+        if (req[0].status === 'fulfilled') {
+          throw new Error('User Already Exist')
+        }
+
+        if (req[1].status === 'rejected') {
+          throw new Error('An Error Occurred')
+        }
+
+        const data = req[1].value.data.data
+
+        this.$store.commit('SET_TRANSACTION_DETAILS', {
+          transactionId: '',
+          phoneNo: 0 + data.user.phone_meta.local_number,
+          accountNo: data.wallet.account.account_number,
+          bankName: data.user.channel,
+          userName: data.user.first_name + ' ' + data.user.last_name,
         })
-        .catch((err) => console.log(err))
-      createAccount
-        .then(({ data: { data } }) => {
-          this.loading = false
-          this.$store.commit('SET_USER_DATA', { ...data.user })
-          this.$router.push('/payment/transfer-to-new-account')
-        })
-        .catch((err) => {
-          if (this.error) return
-          this.error = 'Name Not Supported'
-          this.loading = false
-        })
-      setTimeout(() => (this.error = ''), 3000)
+
+        window.sessionStorage.setItem(
+          'transactionDetails',
+          JSON.stringify(this.transactionDetails)
+        )
+        this.$router.push('/payment/redeem-successful')
+      } catch (err) {
+        this.error = err.message
+        setTimeout(() => (this.error = ''), 3000)
+      } finally {
+        this.loading = false
+      }
     },
   },
 }
@@ -135,14 +162,12 @@ export default {
     margin-top: 10px;
   }
 }
-
 .form {
   margin-top: 50px;
 
   &__title {
     margin-bottom: 20px;
   }
-
   .input-field {
     margin: 15px 0;
   }

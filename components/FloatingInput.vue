@@ -26,6 +26,7 @@
       @focus="handleFocus($event)"
       @blur="handleBlur($event)"
       v-model="inputValue"
+      :disabled="disabled"
     >
       <option v-for="{ Bankname, i } in bank" :key="i" :value="Bankname">
         {{ Bankname }}
@@ -56,6 +57,11 @@ export default {
       type: String,
       required: true,
     },
+    limit: {
+      type: Number,
+      default: 11,
+    },
+    disabled: { type: Boolean },
   },
 
   data() {
@@ -82,6 +88,7 @@ export default {
       data: { data },
     } = await getBankList()
     this.bank = data
+    this.$store.commit('SET_BANK_LIST', data)
   },
 
   mounted() {
@@ -113,7 +120,7 @@ export default {
       if (!isNumber(e)) return
       const { target } = e,
         charCode = e.which === 46 || e.which === 8 || e.which === 13
-      if (target.value.length === 11 && !charCode) {
+      if (target.value.length === this.limit && !charCode) {
         e.preventDefault()
       }
     },
@@ -149,6 +156,10 @@ export default {
 
 select:not(disabled) {
   cursor: pointer;
+}
+
+select:disabled {
+  cursor: progress;
 }
 
 .float__label {

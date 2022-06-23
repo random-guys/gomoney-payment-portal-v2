@@ -32,7 +32,7 @@ export default {
     '@nuxtjs/dotenv',
   ],
 
-  serverMiddleware: ['~/middleware/redirects.js'],
+  // serverMiddleware: ['~/middleware/serverRedirect.js'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -59,5 +59,8 @@ export default {
   env: {
     NODE_ENV: process.env.NODE_ENV,
     baseUrl: 'https://api.staging.gomoney.global',
+  },
+  router: {
+    middleware: ['routerRedirect'],
   },
 }

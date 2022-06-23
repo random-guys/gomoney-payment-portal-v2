@@ -1,5 +1,5 @@
 <template>
-  <div id="layout" class="tw-px-4 lg:tw-px-0">
+  <div id="layout" v-if="link" class="tw-px-4 lg:tw-px-0">
     <div
       class="tw-relative tw-h-screen tw-hidden lg:tw-flex lg:tw-flex-col lg:tw-justify-center"
     >
@@ -19,11 +19,20 @@
       </div>
     </main>
   </div>
+  <div v-else>
+    <Nuxt />
+  </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'default',
+
+  computed: {
+    ...mapState(['link']),
+  },
 }
 </script>
 
@@ -42,6 +51,12 @@ export default {
   .container {
     max-width: 400px;
     margin: auto;
+
+    .page-animate {
+      animation-name: fadeIn;
+      animation-timing-function: ease-in-out;
+      animation-duration: 0.5s;
+    }
   }
 }
 </style>

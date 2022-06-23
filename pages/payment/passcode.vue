@@ -1,5 +1,5 @@
 <template>
-  <main class="passcode">
+  <main class="passcode page-animate">
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
@@ -10,20 +10,27 @@
       <p class="form__title" for="">Enter the passcode shared with the link</p>
 
       <FloatingInput type="tel" v-model="passcode" placeholder="Passcode" />
-      <div class="form__field">
-        <button type="submit" class="btn" :disabled="!passcode">Proceed</button>
+      <div class="form__submit tw-relative">
+        <div
+          class="tw-absolute tw--top-2 tw-text-center tw-w-full tw-text-red-400"
+        >
+          {{ error }}
+        </div>
+        <FormBtn :disabled="disableBtn">
+          <Spinner v-if="loading" height="15px" />
+          <template v-else> Proceed</template>
+        </FormBtn>
       </div>
 
-      <p class="text--light">This code can only be used once</p>
+      <small class="text--light">This code can only be used once</small>
     </form>
 
     <article class="article">
       <p class="article__heading">Claiming your money</p>
       <p class="text--light">
-        <nuxt-link to="/payment/open-account">open a gomoney account</nuxt-link>
-        and have your money sent there free of charge, or transfer to any
-        existing Nigerian bank account. Either way, you'll get your money
-        instantly!
+        Open a gomoney account and have your money sent there free of charge, or
+        transfer to any existing Nigerian bank account. Either way, you'll get
+        your money instantly!
       </p>
 
       <p class="text--light article__info">
@@ -40,12 +47,30 @@
 export default {
   data() {
     return {
-      passcode: 'ldsjjfklajkdf',
+      passcode: '',
+      error: '',
     }
+  },
+  computed: {
+    disableBtn() {
+      return !this.passcode.length || !!this.error
+    },
   },
   methods: {
     handlePasscode() {
-      this.$router.push('/payment/method')
+      try {
+        if (this.passcode.length !== 6) {
+          throw new Error('Passcode Incorrect')
+        }
+        this.$store.commit('passcode', this.passcode)
+        this.$router.push('/payment/method')
+      } catch (err) {
+        this.error = err.message
+      } finally {
+        setTimeout(() => {
+          this.error = ''
+        }, 3000)
+      }
     },
   },
 }
@@ -65,6 +90,13 @@ export default {
 
   &__title {
     margin-bottom: 20px;
+  }
+  &__submit {
+    padding-top: 20px;
+  }
+  small {
+    display: block;
+    margin-top: 5px;
   }
 }
 

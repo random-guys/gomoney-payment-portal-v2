@@ -1,5 +1,5 @@
 <template>
-  <main class="passcode">
+  <main class="passcode page-animate">
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
@@ -7,7 +7,7 @@
       <small class="text--light"> For: Chop Life Small </small>
     </div>
 
-    <form class="form" @submit.prevent="redeemGomoney">
+    <form class="form" @submit.prevent="redeemToAccount">
       <p class="form__title" for="">Enter your gomoney account number</p>
 
       <FloatingInput
@@ -15,28 +15,82 @@
         v-model="number"
         placeholder="Account no/ phone no"
       />
-      <div class="form__field">
-        <button type="submit" class="btn" :disabled="!number">
-          Redeem to {{ name }}
-        </button>
+      <div class="form__submit tw-relative">
+        <div
+          class="tw-absolute tw--top-2 tw-text-center tw-w-full tw-text-red-400"
+        >
+          {{ error }}
+        </div>
+        <FormBtn :disabled="disableBtn">
+          <Spinner v-if="loading" height="15px" />
+          <template v-else> {{ btnText }}</template>
+        </FormBtn>
       </div>
-
-      <p class="text--light">This code can only be used once</p>
     </form>
   </main>
 </template>
 
 <script>
+import { getGomoneyAccDetails } from '~/utils/api'
 export default {
   data() {
     return {
-      number: 73292903,
-      name: 'Temi Kara',
+      number: '',
+      data: {},
+      loading: false,
+      error: '',
+      btnText: 'Verify',
+      disable: false,
     }
   },
 
   computed: {
-    // ...mapGetters([]),
+    name() {
+      return (
+        Object.keys(this.data).length &&
+        this.data.first_name.toUpperCase() +
+          ' ' +
+          this.data.last_name.toUpperCase()
+      )
+    },
+    disableBtn() {
+      return this.number.length < 10 || this.disable
+    },
+  },
+
+  watch: {
+    number(newVal, oldVal) {
+      if (newVal.length < oldVal.length) {
+        this.data = {}
+        this.btnText = 'Verify'
+      }
+    },
+  },
+
+  methods: {
+    async redeemToAccount() {
+      if (this.number.length < 10) return
+      this.loading = this.disable = true
+      if (!this.name) {
+        try {
+          const { data } = await getGomoneyAccDetails(this.number)
+          if (data.status !== 'success') throw new Error('An Error Occurred')
+          this.data = data.data
+          this.btnText = 'Redeem To ' + this.name
+          this.disable = false
+        } catch (err) {
+          this.error = err.message
+          this.btnText = 'Verify'
+        }
+      } else {
+        console.log('data has been fetched')
+      }
+      this.loading = false
+      setTimeout(() => {
+        this.error = ''
+        this.disable = false
+      }, 3000)
+    },
   },
 }
 </script>
@@ -55,6 +109,9 @@ export default {
 
   &__title {
     margin-bottom: 20px;
+  }
+  &__submit {
+    padding-top: 20px;
   }
 }
 </style>
