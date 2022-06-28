@@ -15,15 +15,26 @@
         v-model="number"
         placeholder="Account no/ phone no"
       />
+      <FloatingInput
+        type="text"
+        v-model="accountName"
+        placeholder="Account Name (Auto-filled)"
+        :disabled="true"
+      />
       <div class="form__submit tw-relative">
         <div
           class="tw-absolute tw--top-2 tw-text-center tw-w-full tw-text-red-400"
         >
           {{ error }}
         </div>
-        <FormBtn :disabled="disableBtn">
+        <FormBtn :disabled="loading || disable">
           <Spinner v-if="loading" height="15px" />
-          <template v-else> {{ btnText }}</template>
+          <template v-else>
+            {{ accountName.length ? 'Redeem' : 'Verify' }}
+            <template v-if="accountName.length"
+              >&#8358;50,000</template
+            ></template
+          >
         </FormBtn>
       </div>
     </form>
@@ -39,8 +50,8 @@ export default {
       data: {},
       loading: false,
       error: '',
-      btnText: 'Verify',
-      disable: false,
+      disable: true,
+      accountName: '',
     }
   },
 
@@ -53,16 +64,17 @@ export default {
           this.data.last_name.toUpperCase()
       )
     },
-    disableBtn() {
-      return this.number.length < 10 || this.disable
-    },
   },
 
   watch: {
     number(newVal, oldVal) {
       if (newVal.length < oldVal.length) {
         this.data = {}
-        this.btnText = 'Verify'
+        this.accountName = ''
+        this.disable = true
+      }
+      if (newVal.length > 9) {
+        this.disable = false
       }
     },
   },
@@ -76,19 +88,23 @@ export default {
           const { data } = await getGomoneyAccDetails(this.number)
           if (data.status !== 'success') throw new Error('An Error Occurred')
           this.data = data.data
-          this.btnText = 'Redeem To ' + this.name
+          this.accountName =
+            this.data.first_name.toUpperCase() +
+            ' ' +
+            this.data.last_name.toUpperCase()
+
           this.disable = false
         } catch (err) {
-          this.error = err.message
-          this.btnText = 'Verify'
+          this.error = 'Unable to Find Account'
         }
       } else {
-        console.log('data has been fetched')
+        this.$router.push('/payment/redeem-gomoney-successful')
       }
       this.loading = false
       setTimeout(() => {
         this.error = ''
         this.disable = false
+        if (this.number.length < 10) this.disable = true
       }, 3000)
     },
   },

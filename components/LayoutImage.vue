@@ -11,16 +11,28 @@
     />
     <div class="tw-flex tw-flex-col tw-items-center tw-mt-8">
       <div class="tw-flex tw-justify-center tw-mb-2">
-        <img
-          class="tw-relative tw-mr-3 tw-z-10"
-          src="@/assets/img/apple-logo.svg"
-          alt="apple logo"
-        />
-        <img
-          class="tw-relative tw-z-10"
-          src="@/assets/img/playstore-logo.svg"
-          alt="apple logo"
-        />
+        <a
+          class="tw-cursor-pointer"
+          href="https://apps.apple.com/us/app/gomoney-the-digital-bank/id1491085974"
+          target="_blank"
+        >
+          <img
+            class="tw-relative tw-mr-3 tw-z-10"
+            src="@/assets/img/apple-logo.svg"
+            alt="apple logo"
+          />
+        </a>
+        <a
+          class="tw-cursor-pointer"
+          href="https://play.google.com/store/apps/details?id=com.global.gomoney&hl=en&gl=US"
+          target="_blank"
+        >
+          <img
+            class="tw-relative tw-z-10"
+            src="@/assets/img/playstore-logo.svg"
+            alt="apple logo"
+          />
+        </a>
       </div>
       <p class="tw-text-white tw-text-lg">Download now</p>
     </div>

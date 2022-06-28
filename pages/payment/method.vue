@@ -32,7 +32,9 @@
         </div>
         <div>
           <p class="info text--semibold">Transfer (Nigerian Banks)</p>
-          <small class="text--light">Instant • Fees apply</small>
+          <small class="text--light"
+            >Instant • &#8358;{{ charge.toLocaleString() }} Fees apply
+          </small>
         </div>
         <img class="icon" src="@/assets/img/icon-right.svg" alt="gomoney" />
       </button>
@@ -49,7 +51,9 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      charge: 10.75,
+    }
   },
   methods: {
     redeemGomoney() {

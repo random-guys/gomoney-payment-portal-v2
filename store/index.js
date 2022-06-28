@@ -26,4 +26,5 @@ export const mutations = {
   SET_BANK: (state, val) => (state.bank = val),
   SET_TRANSACTION_DETAILS: (state, val) => (state.transactionDetails = val),
   SET_LINK: (state, val) => (state.link = val),
+  SET_PASSCODE: (state, val) => (state.passcode = val),
 }

@@ -3,7 +3,7 @@ export default function ({ store, route, redirect, from }) {
     redirect('/')
   }
 
-  if (from?.path === '/payment/redeem-successful') {
+  if (from?.path === '/payment/redeem-other-successful') {
     window.stop()
     window.open('https://gomoney.global', '_self')
   } else if (store.state.link.length < 10) redirect('/')

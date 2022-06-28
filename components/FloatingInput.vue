@@ -1,12 +1,24 @@
 <template>
   <div class="float__container tw-min-w-full">
-    <label @click="focusInput" for="floatField" class="float__label">{{
-      placeholder
-    }}</label>
+    <label
+      @click="focusInput"
+      for="floatField"
+      :class="
+        disabled
+          ? select
+            ? 'float__label select__disabled'
+            : 'float__label input__disabled'
+          : select
+          ? 'float__label select__active'
+          : 'float__label input__active'
+      "
+      >{{ placeholder }}</label
+    >
     <input
       v-if="!select"
       ref="input"
       class="float__input"
+      :disabled="disabled"
       :type="type"
       :pattern="checkIfPhoneOrAccount && '[0-9]+'"
       data-placeholder=""
@@ -20,9 +32,7 @@
       v-if="select"
       ref="input"
       class="float__input"
-      :type="type"
       :pattern="checkIfPhoneOrAccount && '[0-9]+'"
-      data-placeholder=""
       @focus="handleFocus($event)"
       @blur="handleBlur($event)"
       v-model="inputValue"
@@ -43,7 +53,6 @@ export default {
     type: {
       type: String,
       default: 'text',
-      required: true,
     },
     placeholder: {
       type: String,
@@ -72,6 +81,7 @@ export default {
   },
   computed: {
     checkIfPhoneOrAccount() {
+      if (this.type === 'text') return false
       return (
         !!this.placeholder.match(/Account/i) ||
         !!this.placeholder.match(/Phone/i) ||
@@ -84,11 +94,17 @@ export default {
   async created() {
     this.inputValue = this.value
     if (!this.select) return
-    const {
-      data: { data },
-    } = await getBankList()
-    this.bank = data
-    this.$store.commit('SET_BANK_LIST', data)
+    try {
+      this.$parent.error = ''
+      const {
+        data: { data },
+      } = await getBankList()
+      this.bank = data
+      this.$store.commit('SET_BANK_LIST', data)
+    } catch (err) {
+      this.$parent.error = 'Cannot Get Bank List, Try Later'
+      console.error(err)
+    }
   },
 
   mounted() {
@@ -97,6 +113,14 @@ export default {
       this.handleFocus()
       this.$emit('input', value)
     })
+  },
+
+  watch: {
+    value(newVal) {
+      if (!this.disabled) return
+      this.inputValue = newVal
+      this.$emit('input', newVal)
+    },
   },
   methods: {
     handleFocus(event) {
@@ -125,6 +149,7 @@ export default {
       }
     },
     focusInput() {
+      if (this.disabled) return
       this.handleFocus()
       this.$refs.input.focus()
     },
@@ -144,7 +169,6 @@ export default {
   position: relative;
   width: 300px;
 }
-
 .float__input {
   border: none;
   font-size: 20px;
@@ -172,16 +196,36 @@ select:disabled {
   cursor: text;
 }
 
+.select__disabled {
+  cursor: progress;
+}
+.input__disabled {
+  cursor: not-allowed;
+}
+
+.select__active {
+  cursor: pointer;
+}
+.input__active {
+  cursor: initial;
+}
+
 .active {
   .float__label {
     transform: translate(0, 0px) scale(0.8);
     color: $activeLabelCol;
     cursor: initial;
   }
+  .select__active {
+    cursor: pointer;
+  }
 }
-
 input:-webkit-autofill {
   box-shadow: 0 0 0px 1000px #fff inset;
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+
+input:disabled {
+  cursor: not-allowed;
 }
 </style>

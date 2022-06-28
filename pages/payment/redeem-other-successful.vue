@@ -6,8 +6,8 @@
       &#8358;{{ amountToPay.toLocaleString() }} Has been successfully redeemed
       to {{ transactionDetails.bankName }}
     </h3>
-    <form @submit.prevent="returnHome">
-      <div class="tw-bg-gray-lightest tw-rounded-lg tw-mb-5">
+    <form>
+      <div class="tw-bg-gray-lightest tw-rounded-lg tw-mt-16">
         <div class="tw-text-center tw-rounded-lg">
           <div class="tw-p-8">
             <p class="tw-text-sm tw-text-gray">Account Name</p>
@@ -18,34 +18,16 @@
         </div>
         <div class="tw-bg-blue-light tw-text-center tw-rounded-lg">
           <div class="tw-p-3">
-            <p class="tw-text-sm tw-text-gray">
-              {{
-                !!transactionDetails.transactionId
-                  ? 'Account Number'
-                  : 'Phone Number'
-              }}
-            </p>
+            <p class="tw-text-sm tw-text-gray">Account Number</p>
             <h3 class="tw-text-xl tw-font-semibold tw-capitalize">
-              {{
-                !!transactionDetails.transactionId
-                  ? transactionDetails.accountNo
-                  : transactionDetails.phoneNo
-              }}
+              {{ transactionDetails.accountNo }}
             </h3>
-            <p class="tw-text-sm tw-text-gray tw-mt-4">
-              {{
-                !!transactionDetails.transactionId
-                  ? 'Transaction ID'
-                  : 'Account Number'
-              }}
-            </p>
+            <p class="tw-text-sm tw-text-gray tw-mt-4">Transaction ID</p>
             <h3
               class="tw-flex tw-justify-center tw-items-center tw-text-xl tw-font-medium tw-text-blue"
             >
               <span class="transaction-id" ref="transactionId">{{
-                !!transactionDetails.transactionId
-                  ? transactionDetails.transactionId
-                  : transactionDetails.accountNo
+                transactionDetails.transactionId
               }}</span>
               <button @click="copyToClipboard" class="tw-ml-1.5">
                 <img src="@/assets/img/copy.svg" alt="gomoney" />
@@ -57,7 +39,6 @@
           </div>
         </div>
       </div>
-      <FormBtn> Return To Home Page </FormBtn>
     </form>
   </div>
 </template>
@@ -77,11 +58,13 @@ export default {
     ...mapState(['transactionDetails']),
   },
   beforeMount() {
+    console.log(this.$route)
     const details = JSON.parse(
       window.sessionStorage.getItem('transactionDetails')
     )
     this.$store.commit('SET_TRANSACTION_DETAILS', details)
   },
+
   methods: {
     copyToClipboard(e) {
       e.preventDefault()
@@ -94,9 +77,6 @@ export default {
       } finally {
         setTimeout(() => (this.copyText = ''), 3000)
       }
-    },
-    returnHome() {
-      window.open('https://gomoney.global', '_self')
     },
   },
   components: { FormBtn },

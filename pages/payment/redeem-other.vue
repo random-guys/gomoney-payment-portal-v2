@@ -13,7 +13,6 @@
       </p>
       <div class="bank">
         <FloatingInput
-          type="text"
           v-model="bank"
           :select="true"
           :disabled="!bankList.length"
@@ -26,6 +25,12 @@
         placeholder="Account no"
         :limit="10"
       />
+      <FloatingInput
+        type="text"
+        v-model="accountName"
+        placeholder="Account Name (Auto-filled)"
+        :disabled="true"
+      />
       <div class="form__btn-wrapper">
         <div
           class="tw-absolute tw--top-7 tw-text-center tw-w-full tw-text-red-400"
@@ -34,7 +39,12 @@
         </div>
         <FormBtn type="submit" :disabled="disableBtn">
           <Spinner v-if="loading" height="15px" />
-          <template v-else> {{ btnText }}</template></FormBtn
+          <template v-else>
+            {{ disableBtn ? 'Verify' : 'Redeem' }}
+            <template v-if="accountName.length"
+              >&#8358;50,000</template
+            ></template
+          ></FormBtn
         >
       </div>
     </form>
@@ -54,15 +64,15 @@ export default {
       bankCode: '',
       loading: false,
       error: '',
-      btnText: 'Search Account',
       disableBtn: true,
+      accountName: '',
     }
   },
   computed: {
     ...mapState(['bankList', 'transactionDetails', 'link']),
 
     userName() {
-      return this.data?.account_name.split(' ').slice(0, 2).join(' ')
+      return this.data?.account_name?.split(' ').slice(0, 2).join(' ')
     },
     sessionId() {
       return this.data?.session_id
@@ -79,7 +89,8 @@ export default {
     async accountNo(newVal, prevVal) {
       if (prevVal.length > newVal.length) {
         this.disableBtn = true
-        this.btnText = 'Search Account'
+        this.data = {}
+        this.accountName = ''
         return
       }
       if (this.accountNo.length !== 10 || !this.bank) return
@@ -96,6 +107,7 @@ export default {
         })
         if (data.status === 'success') {
           this.data = data
+          this.accountName = this.data.account_name
         } else {
           this.accountNo = ''
           throw new Error('Account not Found')
@@ -104,15 +116,17 @@ export default {
         this.error = err.message
       } finally {
         this.loading = false
-        if (this.userName) {
+        if (this.accountName) {
           this.disableBtn = false
-          const name = this.userName.split(' ')
-          this.btnText = 'Redeem To ' + name[0] + ' ' + name[1]
         }
         setTimeout(() => (this.error = ''), 3000)
       }
     },
+    bank() {
+      this.accountNo = ''
+    },
   },
+
   methods: {
     async redeem() {
       if (this.accountNo.length < 10 || !this.userName || !this.bvn) return
@@ -123,6 +137,7 @@ export default {
       const bank = [...this.bankList].filter(
         (bank) => bank.Bankname === this.bank
       )
+
       const apiBody = {
         link: this.link,
         destination_bank_code: bank[0].bankcode,
@@ -143,7 +158,7 @@ export default {
           'transactionDetails',
           JSON.stringify(this.transactionDetails)
         )
-        this.$router.push('/payment/redeem-successful')
+        this.$router.push('/payment/redeem-other-successful')
       } catch (err) {
         console.log(err)
         this.error = 'An error Occurred'

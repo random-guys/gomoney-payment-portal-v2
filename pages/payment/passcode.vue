@@ -49,6 +49,7 @@ export default {
     return {
       passcode: '',
       error: '',
+      loading: false,
     }
   },
   computed: {
@@ -62,7 +63,7 @@ export default {
         if (this.passcode.length !== 6) {
           throw new Error('Passcode Incorrect')
         }
-        this.$store.commit('passcode', this.passcode)
+        this.$store.commit('SET_PASSCODE', this.passcode)
         this.$router.push('/payment/method')
       } catch (err) {
         this.error = err.message
