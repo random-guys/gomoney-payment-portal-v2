@@ -1,21 +1,27 @@
 <template>
   <div class="tw-w-full page-animate">
     <div>
+      <h3 class="tw-text-center text-xl blue tw-mt-12">Successful!</h3>
       <div
-        class="success-card tw-bg-blue-light tw-text-center tw-rounded-lg tw-p-3 tw-mt-16 tw-mx-auto"
-      ></div>
-      <h3 class="tw-text-center text-xl blue tw-mt-4">Successful!</h3>
+        class="success-card tw-bg-blue-light tw-text-center tw-rounded-lg tw-p-3 tw-mt-4 tw-mx-auto"
+      >
+        <img src="~/assets/img/success-logo.svg" />
+      </div>
+
       <p class="tw-text-center tw-font-medium tw-mt-4">
         Your money has been sent to your account
       </p>
     </div>
-    <footer class="tw-mt-8">
+    <footer class="tw-mt-16">
       <h3
         class="tw-text-center tw-capitalize tw-text-lg tw-font-semibold tw-mb-2"
       >
-        Click or Scan QR Code to get the App
+        Get the gomoney app on your phone
       </h3>
-      <aside>
+      <p class="tw-text-center tw-font-medium tw-mt-4">
+        Click or Scan the QR Code below
+      </p>
+      <aside class="tw-mt-4">
         <div>
           <button @click="playStoreLink">
             <img
@@ -26,7 +32,7 @@
           </button>
           <img
             class="mx-auto"
-            src="@/assets/img/apple-logo.svg"
+            src="@/assets/img/apple-logo-transparent.svg"
             alt="apple logo"
           />
         </div>
@@ -40,7 +46,7 @@
           </button>
           <img
             class=""
-            src="@/assets/img/playstore-logo.svg"
+            src="~/assets/img/android-logo-transparent.svg"
             alt="apple logo"
           />
         </div>
@@ -69,8 +75,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .success-card {
-  width: 150px;
+  width: 160px;
   aspect-ratio: 1/1;
+  border-radius: 48px;
+  display: grid;
+  place-items: center;
 }
 
 .blue {
@@ -88,11 +97,11 @@ footer {
   }
   aside {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     div {
       text-align: center;
       .qrcode {
-        width: 150px;
+        width: 100px;
         aspect-ratio: 1/1;
       }
       button {
