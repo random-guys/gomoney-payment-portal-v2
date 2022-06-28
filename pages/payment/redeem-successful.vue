@@ -3,11 +3,18 @@
     <h3
       class="tw-text-center tw-capitalize tw-text-xl tw-font-semibold tw-mb-6"
     >
-      &#8358;{{ amountToPay.toLocaleString() }} Has been successfully redeemed
-      to {{ transactionDetails.bankName }}
+      <template v-if="transactionDetails.transactionId.length > 1">
+        &#8358;{{ amountToPay.toLocaleString() }} Has been successfully redeemed
+        to {{ transactionDetails.bankName }}
+      </template>
+      <template v-else>
+        &#8358;{{ amountToPay.toLocaleString() }} has been sent to your new
+        {{ transactionDetails.bankName }} account
+      </template>
     </h3>
+
     <form>
-      <div class="tw-bg-gray-lightest tw-rounded-lg tw-mt-16">
+      <div class="tw-bg-gray-lightest tw-rounded-lg tw-mt-8">
         <div class="tw-text-center tw-rounded-lg">
           <div class="tw-p-8">
             <p class="tw-text-sm tw-text-gray">Account Name</p>
@@ -18,16 +25,26 @@
         </div>
         <div class="tw-bg-blue-light tw-text-center tw-rounded-lg">
           <div class="tw-p-3">
-            <p class="tw-text-sm tw-text-gray">Account Number</p>
-            <h3 class="tw-text-xl tw-font-semibold tw-capitalize">
-              {{ transactionDetails.accountNo }}
-            </h3>
-            <p class="tw-text-sm tw-text-gray tw-mt-4">Transaction ID</p>
+            <template v-if="transactionDetails.transactionId.length > 1">
+              <p class="tw-text-sm tw-text-gray">Account Number</p>
+              <h3 class="tw-text-xl tw-font-semibold tw-capitalize">
+                {{ transactionDetails.accountNo }}
+              </h3>
+              <p class="tw-text-sm tw-text-gray tw-mt-4">Transaction ID</p>
+            </template>
+            <template v-else>
+              <p class="tw-text-sm tw-text-gray">Phone Number</p>
+              <h3 class="tw-text-xl tw-font-semibold tw-capitalize">
+                {{ transactionDetails.phoneNo }}
+              </h3>
+              <p class="tw-text-sm tw-text-gray tw-mt-4">Account Number</p>
+            </template>
+
             <h3
               class="tw-flex tw-justify-center tw-items-center tw-text-xl tw-font-medium tw-text-blue"
             >
               <span class="transaction-id" ref="transactionId">{{
-                transactionDetails.transactionId
+                transactionDetails.transactionId || transactionDetails.accountNo
               }}</span>
               <button @click="copyToClipboard" class="tw-ml-1.5">
                 <img src="@/assets/img/copy.svg" alt="gomoney" />
@@ -40,14 +57,19 @@
         </div>
       </div>
     </form>
+    <template v-if="!transactionDetails.transactionId">
+      <QrCode />
+    </template>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import FormBtn from '~/components/FormBtn.vue'
+import QrCode from '~/components/qr-code.vue'
 
 export default {
+  components: { FormBtn, QrCode },
   data() {
     return {
       copyText: 'Click To Copy',
@@ -58,7 +80,6 @@ export default {
     ...mapState(['transactionDetails']),
   },
   beforeMount() {
-    console.log(this.$route)
     const details = JSON.parse(
       window.sessionStorage.getItem('transactionDetails')
     )
@@ -79,7 +100,6 @@ export default {
       }
     },
   },
-  components: { FormBtn },
 }
 </script>
 

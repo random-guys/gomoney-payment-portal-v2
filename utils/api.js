@@ -57,3 +57,13 @@ export const redeemToOther = (details) =>
   api.post('/link/bank-transfers/', {
     ...details,
   })
+
+/**
+ * @param {user account number and bank details object of} {
+ * link: 'payment link id',
+ * passcode: '6 digits code',
+ * }
+ *
+ * @return {object with link details}
+ */
+export const claimLink = (linkDetails) => api.post('/link/claim', linkDetails)

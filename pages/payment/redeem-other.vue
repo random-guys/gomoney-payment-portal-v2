@@ -158,7 +158,7 @@ export default {
           'transactionDetails',
           JSON.stringify(this.transactionDetails)
         )
-        this.$router.push('/payment/redeem-other-successful')
+        this.$router.push('/payment/redeem-successful')
       } catch (err) {
         console.log(err)
         this.error = 'An error Occurred'

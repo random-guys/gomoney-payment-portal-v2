@@ -44,6 +44,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { claimLink } from '~/utils/api'
+
 export default {
   data() {
     return {
@@ -53,21 +56,34 @@ export default {
     }
   },
   computed: {
+    ...mapState(['link']),
     disableBtn() {
-      return !this.passcode.length || !!this.error
+      if (!this.passcode.length) return true
+      return this.error.length > 1 || this.loading
     },
   },
   methods: {
-    handlePasscode() {
+    async handlePasscode() {
+      this.loading = true
       try {
         if (this.passcode.length !== 6) {
-          throw new Error('Passcode Incorrect')
+          throw new Error()
         }
+
+        const claim = await claimLink({
+          link: this.link,
+          passcode: this.passcode,
+        })
+
         this.$store.commit('SET_PASSCODE', this.passcode)
         this.$router.push('/payment/method')
       } catch (err) {
-        this.error = err.message
+        if (!navigator.onLine) {
+          this.error = 'No Internet Connection'
+        }
+        this.error = 'Passcode Incorrect'
       } finally {
+        this.loading = false
         setTimeout(() => {
           this.error = ''
         }, 3000)

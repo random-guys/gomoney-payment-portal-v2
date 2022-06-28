@@ -6,6 +6,7 @@ export const state = () => ({
   transactionDetails: {},
   link: '',
   passcode: '',
+  linkDetails: {},
 })
 
 export const getters = {
@@ -27,4 +28,5 @@ export const mutations = {
   SET_TRANSACTION_DETAILS: (state, val) => (state.transactionDetails = val),
   SET_LINK: (state, val) => (state.link = val),
   SET_PASSCODE: (state, val) => (state.passcode = val),
+  SET_LINK_DETAILS: (state, val) => (state.linkDetails = val),
 }
