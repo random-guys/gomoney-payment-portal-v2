@@ -123,7 +123,7 @@ export default {
         if (req[0].status === 'fulfilled') {
           throw new Error('User Already Exist')
         }
-
+        console.log(req[1])
         if (req[1].status === 'rejected') {
           throw new Error('An Error Occurred')
         }

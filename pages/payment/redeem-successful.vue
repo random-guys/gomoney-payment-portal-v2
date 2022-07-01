@@ -4,11 +4,11 @@
       class="tw-text-center tw-capitalize tw-text-xl tw-font-semibold tw-mb-6"
     >
       <template v-if="transactionDetails.transactionId.length > 1">
-        &#8358;{{ amount.toLocaleString() }} redeemed to
+        &#8358;{{ (amount / 100).toFixed(2) }} redeemed to
         {{ transactionDetails.bankName }}
       </template>
       <template v-else>
-        &#8358;{{ amount.toLocaleString() }} has been sent to your new
+        &#8358;{{ (amount / 100).toFixed(2) }} has been sent to your new
         {{ transactionDetails.bankName }} account
       </template>
     </h3>

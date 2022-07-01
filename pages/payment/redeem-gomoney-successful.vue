@@ -9,7 +9,7 @@
       </div>
 
       <p class="tw-text-center tw-font-medium tw-mt-4">
-        &#8358;{{ amount }} has been sent to your account
+        &#8358;{{ (amount / 100).toFixed(2) }} has been sent to your account
       </p>
     </div>
     <QrCode />

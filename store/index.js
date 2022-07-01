@@ -28,8 +28,7 @@ export const getters = {
     return state.linkDetails?.phone_number
   },
   amount(state) {
-    const amount = state.linkDetails?.amount?.toString()
-    return amount?.slice(0, amount.length - 2) + '.' + amount?.slice(-2)
+    return state.linkDetails?.amount
   },
 }
 
