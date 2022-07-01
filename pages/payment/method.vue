@@ -3,7 +3,7 @@
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
-      <p class="text--semibold tw-mt-4">&#8358;5000,000.00</p>
+      <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
     </div>
 
     <p class="text--light">
@@ -49,11 +49,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
       charge: 10.75,
     }
+  },
+  computed: {
+    ...mapGetters(['amount']),
   },
   methods: {
     redeemGomoney() {

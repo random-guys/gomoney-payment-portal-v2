@@ -1,5 +1,5 @@
 <template>
-  <div id="layout" v-if="link" class="tw-px-4 lg:tw-px-0">
+  <div id="layout" v-if="hashLink" class="tw-px-4 lg:tw-px-0">
     <div
       class="tw-relative tw-h-screen tw-hidden lg:tw-flex lg:tw-flex-col lg:tw-justify-center"
     >
@@ -25,13 +25,38 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { verifyLink } from '~/utils/api'
 
 export default {
   name: 'default',
+  data() {
+    return {
+      hashLink: false,
+    }
+  },
 
-  computed: {
-    ...mapState(['link']),
+  async beforeMount() {
+    if (this.$route.hash.length > 10) {
+      try {
+        const {
+          data: { data },
+        } = await verifyLink(this.$route.hash.slice(1))
+
+        this.$store.commit('SET_LINK_DETAILS', data)
+
+        if (data.claimed || data.expired) throw new Error()
+
+        this.hashLink = true
+
+        this.$store.commit('SET_LINK', this.$route.hash.slice(1))
+        this.$router.push('/payment/passcode')
+      } catch (err) {
+        console.error(err)
+        this.$router.push('/link-error')
+      }
+    } else {
+      this.$router.push('/link-error')
+    }
   },
 }
 </script>

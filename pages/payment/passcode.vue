@@ -3,7 +3,7 @@
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
-      <p class="text--semibold tw-mt-4">&#8358;5000,000.00</p>
+      <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
     </div>
 
     <form class="form" @submit.prevent="handlePasscode">
@@ -32,7 +32,6 @@
         transfer to any existing Nigerian bank account. Either way, you'll get
         your money instantly!
       </p>
-
       <p class="text--light article__info">
         <span>Three lines about gomoney</span>
 
@@ -44,7 +43,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import { claimLink } from '~/utils/api'
 
 export default {
@@ -57,6 +56,7 @@ export default {
   },
   computed: {
     ...mapState(['link']),
+    ...mapGetters(['amount', 'claimed', 'expired']),
     disableBtn() {
       if (!this.passcode.length) return true
       return this.error.length > 1 || this.loading

@@ -12,6 +12,8 @@ export const userProfile = (phoneNo) => api.get('/utils/profile/' + phoneNo)
 
 export const getGomoneyAccDetails = (number) => api.get('/utils/info/' + number)
 
+export const verifyLink = (link) => api.get('/link/' + link)
+
 //POST REQUESTS
 
 /**

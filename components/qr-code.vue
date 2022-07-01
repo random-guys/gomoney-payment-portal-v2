@@ -42,7 +42,22 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    playStoreLink() {
+      window.open(
+        'https://play.google.com/store/apps/details?id=com.global.gomoney&hl=en&gl=US',
+        '_self'
+      )
+    },
+    appStoreLink() {
+      window.open(
+        'https://apps.apple.com/us/app/gomoney-the-digital-bank/id1491085974',
+        '_self'
+      )
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>

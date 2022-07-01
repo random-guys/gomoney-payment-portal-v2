@@ -1,6 +1,5 @@
 export const state = () => ({
   userData: {},
-
   bankList: [],
   bank: '',
   transactionDetails: {},
@@ -11,13 +10,26 @@ export const state = () => ({
 
 export const getters = {
   accountNumber(state) {
-    return state.userData.account_number
+    return state.userData?.account_number
   },
   firstName(state) {
-    return state.userData.first_name
+    return state.userData?.first_name
   },
   lastName(state) {
-    return state.userData.last_name
+    return state.userData?.last_name
+  },
+  claimed(state) {
+    return state.linkDetails?.claimed
+  },
+  expired(state) {
+    return state.linkDetails?.expired
+  },
+  senderPhoneNo(state) {
+    return state.linkDetails?.phone_number
+  },
+  amount(state) {
+    const amount = state.linkDetails?.amount?.toString()
+    return amount?.slice(0, amount.length - 2) + '.' + amount?.slice(-2)
   },
 }
 

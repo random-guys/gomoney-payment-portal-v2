@@ -3,7 +3,7 @@
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
-      <p class="text--semibold tw-mt-4">&#8358;5000,000.00</p>
+      <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
       <small class="text--light"> For: Chop Life Small </small>
     </div>
 
@@ -42,7 +42,7 @@
           <template v-else>
             {{ disableBtn ? 'Verify' : 'Redeem' }}
             <template v-if="accountName.length"
-              >&#8358;50,000</template
+              >&#8358;{{ deductedChargeAmount }}</template
             ></template
           ></FormBtn
         >
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import { externalBankUserDetails, redeemToOther } from '~/utils/api'
 
 export default {
@@ -70,6 +70,12 @@ export default {
   },
   computed: {
     ...mapState(['bankList', 'transactionDetails', 'link']),
+    ...mapGetters(['amount']),
+
+    deductedChargeAmount() {
+      const newAmount = this.amount - 10.75
+      return newAmount.toLocaleString()
+    },
 
     userName() {
       return this.data?.account_name?.split(' ').slice(0, 2).join(' ')
@@ -160,7 +166,7 @@ export default {
         )
         this.$router.push('/payment/redeem-successful')
       } catch (err) {
-        console.log(err)
+        console.error(err)
         this.error = 'An error Occurred'
       } finally {
         this.loading = false

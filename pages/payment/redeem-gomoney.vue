@@ -3,7 +3,7 @@
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
-      <p class="text--semibold tw-mt-4">&#8358;5000,000.00</p>
+      <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
       <small class="text--light"> For: Chop Life Small </small>
     </div>
 
@@ -32,7 +32,7 @@
           <template v-else>
             {{ accountName.length ? 'Redeem' : 'Verify' }}
             <template v-if="accountName.length"
-              >&#8358;50,000</template
+              >&#8358;{{ amount.toLocaleString() }}</template
             ></template
           >
         </FormBtn>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { getGomoneyAccDetails } from '~/utils/api'
 export default {
   data() {
@@ -56,6 +57,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters(['amount']),
     name() {
       return (
         Object.keys(this.data).length &&

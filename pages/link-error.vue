@@ -1,6 +1,9 @@
 <template>
-  <div id="index-page">
+  <div id="link-error">
     <!-- <component :is="currentComponent" :key="currentComponent" /> -->
+    <p v-if="claimed">Link has been used</p>
+    <p v-else-if="expired">Link has expired</p>
+    <p v-else>Error!!! No link</p>
   </div>
 </template>
 
@@ -8,25 +11,17 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'IndexPage',
-
   data() {
     return {}
   },
   computed: {
     ...mapGetters(['claimed', 'expired']),
   },
-
-  async mounted() {
-    if (!this.$route.hash) {
-      window.open('https://gomoney.global', '_self')
-    }
-  },
 }
 </script>
 
 <style lang="scss" scoped>
-#index-page {
+#link-error {
   min-width: 100vw;
   min-height: 100vh;
   background: #fff;

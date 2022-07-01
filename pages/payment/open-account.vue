@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import FormBtn from '~/components/FormBtn.vue'
 import { createUser, userProfile } from '~/utils/api'
 
@@ -66,11 +66,11 @@ export default {
       passcodeCheck: '',
       error: '',
       loading: false,
-      amount: 500,
     }
   },
   computed: {
     ...mapState(['link', 'transactionDetails']),
+    ...mapGetters(['senderPhoneNo', 'amount']),
     formFilled() {
       return (
         this.firstName &&
@@ -105,9 +105,9 @@ export default {
         }
 
         const userDetails = {
-          link: this.link,
-          referrer: '2348067153177',
-          amount: 2500,
+          link: 'a31c54e9-34b5-4fa1-8ec1-db5e96d1dbd6',
+          referrer: this.senderPhoneNo,
+          amount: this.amount,
           from_website: true,
           phone_number: this.phoneNumber,
           first_name: this.firstName,
