@@ -13,10 +13,10 @@ export const getters = {
     return state.userData?.account_number
   },
   firstName(state) {
-    return state.userData?.first_name
+    return state.linkDetails?.first_name
   },
   lastName(state) {
-    return state.userData?.last_name
+    return state.linkDetails?.last_name
   },
   claimed(state) {
     return state.linkDetails?.claimed

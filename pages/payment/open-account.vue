@@ -105,7 +105,7 @@ export default {
         }
 
         const userDetails = {
-          link: 'a31c54e9-34b5-4fa1-8ec1-db5e96d1dbd6',
+          link: this.link,
           referrer: this.senderPhoneNo,
           amount: this.amount,
           from_website: true,

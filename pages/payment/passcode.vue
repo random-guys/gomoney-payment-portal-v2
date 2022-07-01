@@ -1,7 +1,7 @@
 <template>
   <main class="passcode page-animate">
     <div class="text">
-      <p class="text--semibold">Abubakar Shomala</p>
+      <p class="text--semibold">{{ firstName + ' ' + lastName }}</p>
       <small class="text--light">Sent you </small>
       <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
     </div>
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     ...mapState(['link']),
-    ...mapGetters(['amount', 'claimed', 'expired']),
+    ...mapGetters(['amount', 'claimed', 'expired', 'firstName', 'lastName']),
     disableBtn() {
       if (!this.passcode.length) return true
       return this.error.length > 1 || this.loading

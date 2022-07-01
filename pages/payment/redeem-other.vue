@@ -1,7 +1,7 @@
 <template>
   <main class="redeem-other page-animate">
     <div class="text">
-      <p class="text--semibold">Abubakar Shomala</p>
+      <p class="text--semibold">{{ firstName + ' ' + lastName }}</p>
       <small class="text--light">Sent you </small>
       <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
       <small class="text--light"> For: Chop Life Small </small>
@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     ...mapState(['bankList', 'transactionDetails', 'link']),
-    ...mapGetters(['amount']),
+    ...mapGetters(['amount', 'firstName', 'lastName']),
 
     deductedChargeAmount() {
       const newAmount = this.amount - 10.75

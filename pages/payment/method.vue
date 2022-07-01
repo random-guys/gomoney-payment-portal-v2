@@ -1,7 +1,7 @@
 <template>
   <main class="method page-animate">
     <div class="text">
-      <p class="text--semibold">Abubakar Shomala</p>
+      <p class="text--semibold">{{ firstName + ' ' + lastName }}</p>
       <small class="text--light">Sent you </small>
       <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
     </div>
@@ -58,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['amount']),
+    ...mapGetters(['amount', 'firstName', 'lastName']),
   },
   methods: {
     redeemGomoney() {

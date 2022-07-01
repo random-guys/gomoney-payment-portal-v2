@@ -4,11 +4,11 @@
       class="tw-text-center tw-capitalize tw-text-xl tw-font-semibold tw-mb-6"
     >
       <template v-if="transactionDetails.transactionId.length > 1">
-        &#8358;{{ amountToPay.toLocaleString() }} Has been successfully redeemed
-        to {{ transactionDetails.bankName }}
+        &#8358;{{ amount.toLocaleString() }} redeemed to
+        {{ transactionDetails.bankName }}
       </template>
       <template v-else>
-        &#8358;{{ amountToPay.toLocaleString() }} has been sent to your new
+        &#8358;{{ amount.toLocaleString() }} has been sent to your new
         {{ transactionDetails.bankName }} account
       </template>
     </h3>
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import FormBtn from '~/components/FormBtn.vue'
 import QrCode from '~/components/qr-code.vue'
 
@@ -73,11 +73,11 @@ export default {
   data() {
     return {
       copyText: 'Click To Copy',
-      amountToPay: 10000,
     }
   },
   computed: {
     ...mapState(['transactionDetails']),
+    ...mapGetters(['amount']),
   },
   beforeMount() {
     const details = JSON.parse(
