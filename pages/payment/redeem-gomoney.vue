@@ -3,7 +3,9 @@
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
-      <p class="text--semibold tw-mt-4">&#8358;{{ amount.toLocaleString() }}</p>
+      <p class="text--semibold tw-mt-4">
+        &#8358;{{ (amount / 100).toFixed(2) }}
+      </p>
       <small class="text--light"> For: Chop Life Small </small>
     </div>
 
@@ -31,8 +33,8 @@
           <Spinner v-if="loading" height="15px" />
           <template v-else>
             {{ accountName.length ? 'Redeem' : 'Verify' }}
-            <template v-if="accountName.length"
-              >&#8358;{{ amount.toLocaleString() }}</template
+            <template v-if="accountName.length">
+              &#8358;{{ (amount / 100).toFixed(2) }}</template
             ></template
           >
         </FormBtn>

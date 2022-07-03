@@ -24,6 +24,9 @@ export default {
   computed: {
     ...mapGetters(['amount']),
   },
+  beforeMount() {
+    window.sessionStorage.clear()
+  },
 }
 </script>
 <style lang="scss" scoped>

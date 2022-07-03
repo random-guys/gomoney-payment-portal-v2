@@ -25,39 +25,49 @@
 </template>
 
 <script>
-import { verifyLink } from '~/utils/api'
+import { mapState } from 'vuex'
 
 export default {
   name: 'default',
-  data() {
-    return {
-      hashLink: false,
-    }
+  // data() {
+  //   return {
+  //     hashLink: false,
+  //   }
+  // },
+
+  computed: {
+    ...mapState(['hashLink']),
   },
 
-  async beforeMount() {
-    if (this.$route.hash.length > 10) {
-      try {
-        const {
-          data: { data },
-        } = await verifyLink(this.$route.hash.slice(1))
-
-        this.$store.commit('SET_LINK_DETAILS', data)
-
-        if (data.claimed || data.expired) throw new Error()
-
-        this.hashLink = true
-
-        this.$store.commit('SET_LINK', this.$route.hash.slice(1))
-        this.$router.push('/payment/passcode')
-      } catch (err) {
-        console.error(err)
-        this.$router.push('/link-error')
-      }
-    } else {
-      this.$router.push('/link-error')
-    }
+  watch: {
+    hashLink(newVal, oldVal) {
+      console.log(newVal, oldVal, 'here')
+    },
   },
+
+  // async beforeMount() {
+  //   if (this.$route.hash.length > 10) {
+  //     try {
+  //       const {
+  //         data: { data },
+  //       } = await verifyLink(this.$route.hash.slice(1))
+
+  //       this.$store.commit('SET_LINK_DETAILS', data)
+
+  //       if (data.claimed || data.expired) throw new Error()
+
+  //       this.hashLink = true
+
+  //       this.$store.commit('SET_LINK', this.$route.hash.slice(1))
+  //       this.$router.push('/payment/passcode')
+  //     } catch (err) {
+  //       console.error(err)
+  //       this.$router.push('/verify-link')
+  //     }
+  //   } else {
+  //     this.$router.push('/verify-link')
+  //   }
+  // },
 }
 </script>
 

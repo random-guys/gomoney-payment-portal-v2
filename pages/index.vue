@@ -6,6 +6,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { verifyLink } from '~/utils/api'
 
 export default {
   name: 'IndexPage',
@@ -17,9 +18,37 @@ export default {
     ...mapGetters(['claimed', 'expired']),
   },
 
-  async mounted() {
-    if (!this.$route.hash) {
+  async beforeMount() {
+    const noItem = JSON.stringify('')
+    const savedLink = JSON.parse(
+      window.sessionStorage.getItem('link') || noItem
+    )
+
+    if (!this.$route.hash.length && !savedLink) {
       window.open('https://gomoney.global', '_self')
+      return
+    }
+
+    const link = this.$route.hash.slice(1) || savedLink
+
+    window.sessionStorage.clear()
+    window.sessionStorage.setItem('link', JSON.stringify(link))
+
+    try {
+      const {
+        data: { data },
+      } = await verifyLink(link)
+
+      this.$store.commit('SET_LINK_DETAILS', data)
+
+      if (data.claimed || data.expired) throw new Error()
+
+      this.$store.commit('SET_HASH_LINK', true)
+      this.$store.commit('SET_LINK', link)
+      this.$router.push('/payment/passcode')
+    } catch (err) {
+      console.error(err)
+      this.$router.push('/verify-link')
     }
   },
 }

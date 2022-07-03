@@ -6,6 +6,7 @@ export const state = () => ({
   link: '',
   passcode: '',
   linkDetails: {},
+  hashLink: false,
 })
 
 export const getters = {
@@ -40,4 +41,5 @@ export const mutations = {
   SET_LINK: (state, val) => (state.link = val),
   SET_PASSCODE: (state, val) => (state.passcode = val),
   SET_LINK_DETAILS: (state, val) => (state.linkDetails = val),
+  SET_HASH_LINK: (state, val) => (state.hashLink = val),
 }

@@ -84,6 +84,7 @@ export default {
       window.sessionStorage.getItem('transactionDetails')
     )
     this.$store.commit('SET_TRANSACTION_DETAILS', details)
+    window.sessionStorage.clear()
   },
 
   methods: {
