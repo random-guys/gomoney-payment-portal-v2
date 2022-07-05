@@ -1,11 +1,9 @@
 <template>
-  <div id="layout" v-if="hashLink" class="tw-px-4 lg:tw-px-0">
-    <div
-      class="tw-relative tw-h-screen tw-hidden lg:tw-flex lg:tw-flex-col lg:tw-justify-center"
-    >
+  <div id="layout" v-if="hashLink" class="tw-px-4 lg:tw-px-0 tw-min-h-screen">
+    <div class="tw-relative lg:tw-flex lg:tw-flex-col lg:tw-justify-center">
       <LayoutImage />
       <img
-        class="bg-img tw-absolute tw-bottom-0 tw-h-screen tw-w-full"
+        class="bg-img tw-absolute tw-bottom-0 tw-h-full tw-w-full"
         src="https://res.cloudinary.com/gomoney/image/upload/v1642037686/payment-link/ql0zn5lk47gyisqjrffe.webp"
         alt="onboarding"
       />
@@ -86,6 +84,7 @@ export default {
   .container {
     max-width: 400px;
     margin: auto;
+    padding-bottom: 2rem;
 
     .page-animate {
       animation-name: fadeIn;

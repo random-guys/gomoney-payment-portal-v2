@@ -42,7 +42,10 @@
       </button>
     </div>
     <aside>
-      <button @click="$router.push('/payment/open-account')">
+      <button
+        class="tw-flex tw-w-full tw-justify-between"
+        @click="$router.push('/payment/open-account')"
+      >
         <span class="text__bold--blue">Open a gomoney account for free</span>
         <img class="icon" src="@/assets/img/Mask.svg" alt="gomoney" />
       </button>
