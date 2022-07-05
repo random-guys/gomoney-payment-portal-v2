@@ -45,7 +45,13 @@ export default {
 
       this.$store.commit('SET_HASH_LINK', true)
       this.$store.commit('SET_LINK', link)
-      this.$router.push('/payment/passcode')
+      // this.$router.replace('/payment/passcode')
+      this.$router.push({
+        path: '/payment/passcode',
+        query: {
+          timestamp: Date.now(),
+        },
+      })
     } catch (err) {
       console.error(err)
       this.$router.push('/verify-link')
