@@ -1,6 +1,8 @@
 <template>
   <div id="layout" v-if="hashLink" class="tw-px-4 lg:tw-px-0 tw-min-h-screen">
-    <div class="tw-relative lg:tw-flex lg:tw-flex-col lg:tw-justify-center">
+    <div
+      class="tw-relative tw-hidden lg:tw-flex lg:tw-flex-col lg:tw-justify-center"
+    >
       <LayoutImage />
       <img
         class="bg-img tw-absolute tw-bottom-0 tw-h-full tw-w-full"
@@ -35,12 +37,6 @@ export default {
 
   computed: {
     ...mapState(['hashLink']),
-  },
-
-  watch: {
-    hashLink(newVal, oldVal) {
-      console.log(newVal, oldVal, 'here')
-    },
   },
 
   // async beforeMount() {
