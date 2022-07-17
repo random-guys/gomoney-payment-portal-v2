@@ -1,7 +1,7 @@
 <template>
   <main class="method page-animate">
     <div class="text">
-      <p class="text--semibold">{{ firstName + ' ' + lastName }}</p>
+      <p class="text--semibold tw-capitalize">{{ firstName + ' ' + lastName }}</p>
       <small class="text--light">Sent you </small>
       <p class="text--semibold tw-mt-4">
         &#8358;{{ (amount / 100).toFixed(2) }}

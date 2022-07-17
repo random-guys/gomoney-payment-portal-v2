@@ -132,7 +132,7 @@ export default {
         this.$store.commit('SET_TRANSACTION_DETAILS', {
           transactionId: '',
           phoneNo: 0 + data.user.phone_meta.local_number,
-          accountNo: data.wallet.account.account_number,
+          accountNo: data.wallet.account.nuban,
           bankName: data.user.channel,
           userName: data.user.first_name + ' ' + data.user.last_name,
         })
