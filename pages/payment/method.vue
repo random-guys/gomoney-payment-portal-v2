@@ -150,7 +150,7 @@ p.text--light {
 
 aside {
   padding: 0 0.5rem;
-  margin: 50px 0 0;
+  margin: 30px 0 0;
 
   button {
     margin: auto;

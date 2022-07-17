@@ -10,12 +10,6 @@
         <slot />
         {{ title }}
       </span>
-      <!-- <img
-        v-show="loading"
-        class="tw-m-auto"
-        src="@/assets/img/spinner.svg"
-        alt="animated spinner"
-      /> -->
     </button>
   </div>
 </template>
@@ -26,7 +20,6 @@ export default {
 
   props: {
     title: { type: String, default: () => '' },
-    // loading: { type: Boolean, default: () => false },
     event: { type: [Function, Promise] },
     disabled: { type: Boolean },
   },

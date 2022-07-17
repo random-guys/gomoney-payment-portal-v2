@@ -43,9 +43,14 @@
             <h3
               class="tw-flex tw-justify-center tw-items-center tw-text-xl tw-font-medium tw-text-blue"
             >
-              <span class="transaction-id" ref="transactionId">{{
-                transactionDetails.transactionId || transactionDetails.accountNo
-              }}</span>
+              <span
+                :class="transactionDetails.transactionId && 'transaction-id'"
+                ref="transactionId"
+                >{{
+                  transactionDetails.transactionId ||
+                  transactionDetails.accountNo
+                }}</span
+              >
               <button @click="copyToClipboard" class="tw-ml-1.5">
                 <img src="@/assets/img/copy.svg" alt="gomoney" />
               </button>
@@ -97,7 +102,7 @@ export default {
       } catch (err) {
         this.copyText = 'Unable to copy'
       } finally {
-        setTimeout(() => (this.copyText = ''), 3000)
+        setTimeout(() => (this.copyText = 'Click to copy'), 3000)
       }
     },
   },

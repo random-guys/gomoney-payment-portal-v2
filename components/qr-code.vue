@@ -10,32 +10,13 @@
     </p>
     <aside class="tw-mt-4">
       <div>
-        <button @click="playStoreLink">
+        <button @click="appLink">
           <img
             class="qrcode"
-            src="~/assets/img/gomoney-ios.png"
+            src="~/assets/img/qr-code.png"
             alt="Qr code android"
           />
         </button>
-        <img
-          class="mx-auto"
-          src="@/assets/img/apple-logo-transparent.svg"
-          alt="apple logo"
-        />
-      </div>
-      <div>
-        <button @click="appStoreLink">
-          <img
-            class="qrcode"
-            src="~/assets/img/gomoney-andriod.png"
-            alt="Qr code ios"
-          />
-        </button>
-        <img
-          class=""
-          src="~/assets/img/android-logo-transparent.svg"
-          alt="apple logo"
-        />
       </div>
     </aside>
   </footer>
@@ -44,17 +25,8 @@
 <script>
 export default {
   methods: {
-    playStoreLink() {
-      window.open(
-        'https://play.google.com/store/apps/details?id=com.global.gomoney&hl=en&gl=US',
-        '_self'
-      )
-    },
-    appStoreLink() {
-      window.open(
-        'https://apps.apple.com/us/app/gomoney-the-digital-bank/id1491085974',
-        '_self'
-      )
+    appLink() {
+      window.open('https://gomoney.global/app', '_self')
     },
   },
 }
@@ -72,7 +44,7 @@ footer {
     div {
       text-align: center;
       .qrcode {
-        width: 100px;
+        width: 150px;
         aspect-ratio: 1/1;
       }
       button {
