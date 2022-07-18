@@ -73,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['bankList', 'transactionDetails', 'link']),
+    ...mapState(['bankList', 'transactionDetails', 'link', 'passcode']),
     ...mapGetters(['amount', 'firstName', 'lastName']),
 
     deductedChargeAmount() {
@@ -152,7 +152,7 @@ export default {
         link: this.link,
         destination_bank_code: bank[0].bankcode,
         destination_account_number: this.accountNo,
-        passcode: '000000',
+        passcode: this.passcode,
       }
 
       try {

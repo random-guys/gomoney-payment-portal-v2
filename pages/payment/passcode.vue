@@ -84,6 +84,7 @@ export default {
       } catch (err) {
         if (!navigator.onLine) {
           this.error = 'No Internet Connection'
+          return
         }
         this.error = 'Passcode Incorrect'
       } finally {
