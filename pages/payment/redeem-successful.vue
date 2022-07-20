@@ -4,8 +4,8 @@
       class="tw-text-center tw-capitalize tw-text-xl tw-font-semibold tw-mb-6"
     >
       <template v-if="transactionDetails.transactionId.length > 1">
-        &#8358;{{ (amount / 100).toFixed(2) }} redeemed to
-        {{ transactionDetails.bankName }}
+        &#8358;{{ (amount / 100).toFixed(2) }} redeemed to your
+        {{ transactionDetails.bankName }} account
       </template>
       <template v-else>
         &#8358;{{ (amount / 100).toFixed(2) }} has been sent to your new

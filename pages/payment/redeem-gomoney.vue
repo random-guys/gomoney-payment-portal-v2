@@ -1,5 +1,5 @@
 <template>
-  <main class="passcode page-animate">
+  <main class="redeem-gomoney page-animate">
     <div class="text">
       <p class="text--semibold">Abubakar Shomala</p>
       <small class="text--light">Sent you </small>
@@ -32,11 +32,11 @@
         <FormBtn :disabled="loading || disable">
           <Spinner v-if="loading" height="15px" />
           <template v-else>
-            {{ accountName.length ? 'Redeem' : 'Verify' }}
+            {{ btnText }}
+            <!-- {{ accountName.length ? 'Redeem' : 'Verify' }}
             <template v-if="accountName.length">
-              &#8358;{{ (amount / 100).toFixed(2) }}</template
-            ></template
-          >
+              &#8358;{{ (amount / 100).toFixed(2) }}</template> -->
+          </template>
         </FormBtn>
       </div>
     </form>
@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getGomoneyAccDetails } from '~/utils/api'
+import { mapGetters, mapState } from 'vuex'
+import { getGomoneyAccDetails, redeemToOther } from '~/utils/api'
 export default {
   data() {
     return {
@@ -55,10 +55,13 @@ export default {
       error: '',
       disable: true,
       accountName: '',
+      btnText: 'Verify',
+      accountNo: '',
     }
   },
 
   computed: {
+    ...mapState(['link', 'passcode', 'transactionDetails']),
     ...mapGetters(['amount']),
     name() {
       return (
@@ -74,6 +77,7 @@ export default {
     number(newVal, oldVal) {
       if (newVal.length < oldVal.length) {
         this.data = {}
+        this.btnText = 'Verify'
         this.accountName = ''
         this.disable = true
       }
@@ -90,19 +94,39 @@ export default {
       if (!this.name) {
         try {
           const { data } = await getGomoneyAccDetails(this.number)
-          if (data.status !== 'success') throw new Error('An Error Occurred')
           this.data = data.data
-          this.accountName =
-            this.data.first_name.toUpperCase() +
-            ' ' +
-            this.data.last_name.toUpperCase()
+          this.accountName = `${this.data.first_name.toUpperCase()} ${this.data.last_name.toUpperCase()}`
+          this.accountNo = this.data.account_number
 
           this.disable = false
+          this.btnText = `Redeem ₦${(this.amount / 100).toFixed(2)}`
         } catch (err) {
-          this.error = 'Unable to Find Account'
+          this.error = 'Unable to Find Account at This Time'
         }
       } else {
-        this.$router.push('/payment/redeem-gomoney-successful')
+        try {
+          const apiBody = {
+            link: this.link,
+            destination_bank_code: '100022',
+            destination_account_number: this.accountNo,
+            passcode: this.passcode,
+          }
+          const { data } = await redeemToOther(apiBody)
+
+          this.$store.commit('SET_TRANSACTION_DETAILS', {
+            transactionId: data.data.transaction_id,
+            accountNo: this.accountNo,
+            bankName: 'Gomoney',
+            userName: this.accountName,
+          })
+          window.sessionStorage.setItem(
+            'transactionDetails',
+            JSON.stringify(this.transactionDetails)
+          )
+          this.$router.push('/payment/redeem-successful')
+        } catch (err) {
+          this.error = 'Cannot Redeem Money! Try Again'
+        }
       }
       this.loading = false
       setTimeout(() => {
